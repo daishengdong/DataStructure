@@ -34,7 +34,7 @@ void Joseph::init() {
 	lastNode = firstNode;
 
 	linkList newNode;
-	for ( int i = 2; i <= n; ++i ) {
+	for (int i = 2; i <= n; ++i) {
 		cin >> curCode;
 		newNode = new Node;
 		newNode->number = i;
@@ -43,7 +43,7 @@ void Joseph::init() {
 		lastNode->next = newNode;
 		lastNode = newNode;
 	}
-	if ( n >= 2 ) {
+	if (n >= 2) {
 		lastNode->next = firstNode;
 	} else {
 		firstNode->next = firstNode;
@@ -54,8 +54,8 @@ void Joseph::run() {
 	int count = 1;
 	linkList curTempNode = firstNode;
 	linkList preNode;
-	while ( curTempNode->next != curTempNode ) {
-		if ( count == m ) {
+	while (curTempNode->next != curTempNode) {
+		if (count == m) {
 			count = 1;
 			m = curTempNode->code;
 			cout << curTempNode->number << " ";
@@ -74,7 +74,7 @@ void Joseph::run() {
 
 int main() {
 	Joseph * insJoseph = new Joseph();
-	while ( 1 ) {
+	while (1) {
 		insJoseph->init();
 		insJoseph->run();
 	}

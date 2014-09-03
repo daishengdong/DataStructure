@@ -14,9 +14,9 @@ typedef struct _node {
 class list {
 	public:
 		list();
-		ptr_node add( int );
-		void add( ptr_node );
-		void reverse( list& );
+		ptr_node add(int);
+		void add(ptr_node);
+		void reverse(list&);
 		void print();
 	private:
 		ptr_node head;		// head node
@@ -28,9 +28,9 @@ list::list() {
 	length = 0;
 }
 
-ptr_node list::add( int value ) {
+ptr_node list::add(int value) {
 	ptr_node tmp = head;
-	while ( tmp->next ) tmp = tmp->next;
+	while (tmp->next) tmp = tmp->next;
 
 	ptr_node new_node = new node();
 	new_node->value = value;
@@ -40,42 +40,42 @@ ptr_node list::add( int value ) {
 	return new_node;
 }
 
-void list::add( ptr_node new_node ) {
+void list::add(ptr_node new_node) {
 	ptr_node tmp = head;
-	while ( tmp->next ) tmp = tmp->next;
+	while (tmp->next) tmp = tmp->next;
 
 	tmp->next = new_node;
 	new_node->next = NULL;
 	++length;
 }
 
-void list::reverse( list& lb ) {
+void list::reverse(list& lb) {
 	stack< ptr_node > tmpStack;
 	ptr_node tmp = head;
-	while ( tmp->next ) {
-		tmpStack.push( tmp->next );
+	while (tmp->next) {
+		tmpStack.push(tmp->next);
 		tmp = tmp->next;
 	}
 
-	while ( !tmpStack.empty() ) {
-		lb.add( tmpStack.top() );
+	while (!tmpStack.empty()) {
+		lb.add(tmpStack.top());
 		tmpStack.pop();
 	}
 }
 
 void list::print() {
 	ptr_node tmp = head;
-	while ( tmp->next ) {
+	while (tmp->next) {
 		cout << tmp->next->value << endl;
 		tmp = tmp->next;
 	}
 }
 
-int main( int argc, const char *argv[] ) {
+int main(int argc, const char *argv[]) {
 	list la, lb;
-	for ( int i = 0; i < 10; ++i ) la.add( i );
+	for (int i = 0; i < 10; ++i) la.add(i);
 
-	la.reverse( lb );
+	la.reverse(lb);
 	lb.print();
 
 	return 0;

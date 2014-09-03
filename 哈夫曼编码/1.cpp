@@ -44,8 +44,8 @@ public:
 
 private:
 	void buildTree();	// 建树
-	ptrTreeNode getPtr( ptrTreeNode root, char ch );
-	char * getCoding( ptrTreeNode node );
+	ptrTreeNode getPtr(ptrTreeNode root, char ch);
+	char * getCoding(ptrTreeNode node);
 
 	ptrListLink listOfRoot;	// 链接树节点的链表头
 	ptrTreeNode SUMRoot;	// 建树后得到的哈夫曼树的根节点
@@ -61,7 +61,7 @@ void hfmCode::Initialization() {
 
 	ptrListNode curNode = listOfRoot->head;
 	map< char, int >::iterator it = weightMap.begin();
-	for ( ; it != weightMap.end(); ++it ) {
+	for (; it != weightMap.end(); ++it) {
 		ptrTreeNode newNode = new TreeNode;
 		newNode->chr = it->first;
 		newNode->weight = it->second;
@@ -80,28 +80,28 @@ void hfmCode::Initialization() {
 }
 
 void hfmCode::TreePrint() {
-	if ( !SUMRoot ) {
+	if (!SUMRoot) {
 		return;
 	}
 	queue < ptrTreeNode > q;
 
 	cout << SUMRoot->chr << endl;
-	q.push( SUMRoot->lChild );
-	q.push( SUMRoot->rChild );
+	q.push(SUMRoot->lChild);
+	q.push(SUMRoot->rChild);
 
-	while ( !q.empty() ) {
+	while (!q.empty()) {
 		int size = q.size();
-		for ( int i = 0; i < size; ++i ) {
+		for (int i = 0; i < size; ++i) {
 			ptrTreeNode root = q.front();
 			q.pop();
-			if ( root ) {
-				if ( root->chr == ' ' ) {
+			if (root) {
+				if (root->chr == ' ') {
 					cout << "^" << "   ";
 				} else {
 					cout << root->chr << "   ";
 				}
-				q.push( root->lChild );
-				q.push( root->rChild );
+				q.push(root->lChild);
+				q.push(root->rChild);
 			} else {
 				cout << "n   ";
 			}
@@ -111,20 +111,20 @@ void hfmCode::TreePrint() {
 }
 
 void hfmCode::buildTree() {
-	while ( listOfRoot->countOfRoot > 1 ) {
+	while (listOfRoot->countOfRoot > 1) {
 		int min1, min2, min;
 		ptrTreeNode ptrMin1 = new TreeNode;
 		ptrTreeNode ptrMin2 = new TreeNode;
 		ptrListNode ptrPreMin = new ListNode;
 
-		for ( int i = 1; i <= 2; ++i ) {
+		for (int i = 1; i <= 2; ++i) {
 			ptrListNode curRoot = listOfRoot->head;
 			min = curRoot->next->root->weight;
-			while ( curRoot->next ) {
+			while (curRoot->next) {
 				int weight = curRoot->next->root->weight;
-				if ( weight <= min ) {
+				if (weight <= min) {
 					min = weight;
-					if ( 1 == i ) {
+					if (1 == i) {
 						min1 = min;
 						ptrMin1 = curRoot->next->root;
 					} else {
@@ -169,13 +169,13 @@ void hfmCode::buildTree() {
 void hfmCode::Encoding() {
 	string fileNameIn = "ToBeTran.txt";
 	string fileNameOut = "CodeFile.txt";
-	ifstream fin( fileNameIn.c_str() );
-	ofstream fout( fileNameOut.c_str() );
+	ifstream fin(fileNameIn.c_str());
+	ofstream fout(fileNameOut.c_str());
 	char chr;
-	while ( fin.get( chr ) ) {
-		ptrTreeNode ptr = getPtr( SUMRoot, chr );
+	while (fin.get(chr)) {
+		ptrTreeNode ptr = getPtr(SUMRoot, chr);
 		cout << chr << "  ";
-		char * coding = getCoding( ptr );
+		char * coding = getCoding(ptr);
 		cout << coding << endl;
 		fout << coding;
 	}
@@ -187,17 +187,17 @@ void hfmCode::Encoding() {
 void hfmCode::Decoding() {
 	string fileNameIn = "CodeFile.txt";
 	string fileNameOut = "TextFile.txt";
-	ifstream fin( fileNameIn.c_str() );
-	ofstream fout( fileNameOut.c_str() );
+	ifstream fin(fileNameIn.c_str());
+	ofstream fout(fileNameOut.c_str());
 	char tag;
 	ptrTreeNode curNode = SUMRoot;
-	while ( fin.get( tag ) ) {
-		if ( LEFT == tag ) {
+	while (fin.get(tag)) {
+		if (LEFT == tag) {
 			curNode = curNode->lChild;
-		} else if ( RIGHT == tag ) {
+		} else if (RIGHT == tag) {
 			curNode = curNode->rChild;
 		}
-		if ( curNode->chr != ROOT ) {
+		if (curNode->chr != ROOT) {
 			cout << curNode->chr << endl;
 			fout << curNode->chr;
 			curNode = SUMRoot;
@@ -208,26 +208,26 @@ void hfmCode::Decoding() {
 	fin.close();
 }
 
-ptrTreeNode hfmCode::getPtr( ptrTreeNode root, char ch ) {
+ptrTreeNode hfmCode::getPtr(ptrTreeNode root, char ch) {
 	ptrTreeNode tempNode = NULL;
-	if ( !root ) {
+	if (!root) {
 		return NULL;
 	}
 
-	if ( root->chr == ch ) {
+	if (root->chr == ch) {
 		return root;
 	}
 
-	if ( root->lChild ) {
-		tempNode = getPtr( root->lChild, ch );
-		if ( tempNode ) {
+	if (root->lChild) {
+		tempNode = getPtr(root->lChild, ch);
+		if (tempNode) {
 			return tempNode;
 		}
 	}
 
-	if ( root->rChild ) {
-		tempNode = getPtr( root->rChild, ch );
-		if ( tempNode ) {
+	if (root->rChild) {
+		tempNode = getPtr(root->rChild, ch);
+		if (tempNode) {
 			return tempNode;
 		}
 	}
@@ -235,52 +235,52 @@ ptrTreeNode hfmCode::getPtr( ptrTreeNode root, char ch ) {
 	return NULL;
 }
 
-char * hfmCode::getCoding( ptrTreeNode node ) {
+char * hfmCode::getCoding(ptrTreeNode node) {
 	stack< char > coding;
-	while ( node->parent ) {
-		coding.push( node->tag );
+	while (node->parent) {
+		coding.push(node->tag);
 		node = node->parent;
 	}
 
 	int i = 0;
-	char * codeString = new char[ coding.size() + 1 ];
-	while ( !coding.empty() ) {
-		codeString[ i ] = coding.top();
+	char * codeString = new char[coding.size() + 1];
+	while (!coding.empty()) {
+		codeString[i] = coding.top();
 		coding.pop();
 		++i;
 	}
-	codeString[ i ] = '\0';
+	codeString[i] = '\0';
 	return codeString;
 }
 
 void initMap() {
-	weightMap.insert( pair< char, int > ( ' ', 186 ) );
-	weightMap.insert( pair< char, int > ( 'A', 64 ) );
-	weightMap.insert( pair< char, int > ( 'B', 13 ) );
-	weightMap.insert( pair< char, int > ( 'C', 22 ) );
-	weightMap.insert( pair< char, int > ( 'D', 32 ) );
-	weightMap.insert( pair< char, int > ( 'E', 103 ) );
-	weightMap.insert( pair< char, int > ( 'F', 21 ) );
-	weightMap.insert( pair< char, int > ( 'G', 15 ) );
-	weightMap.insert( pair< char, int > ( 'H', 47 ) );
-	weightMap.insert( pair< char, int > ( 'I', 57 ) );
-	weightMap.insert( pair< char, int > ( 'J', 1 ) );
-	weightMap.insert( pair< char, int > ( 'K', 5 ) );
-	weightMap.insert( pair< char, int > ( 'L', 32 ) );
-	weightMap.insert( pair< char, int > ( 'M', 20 ) );
-	weightMap.insert( pair< char, int > ( 'N', 57 ) );
-	weightMap.insert( pair< char, int > ( 'O', 63 ) );
-	weightMap.insert( pair< char, int > ( 'P', 15 ) );
-	weightMap.insert( pair< char, int > ( 'Q', 1 ) );
-	weightMap.insert( pair< char, int > ( 'R', 48 ) );
-	weightMap.insert( pair< char, int > ( 'S', 51 ) );
-	weightMap.insert( pair< char, int > ( 'T', 80 ) );
-	weightMap.insert( pair< char, int > ( 'U', 23 ) );
-	weightMap.insert( pair< char, int > ( 'V', 8 ) );
-	weightMap.insert( pair< char, int > ( 'W', 18 ) );
-	weightMap.insert( pair< char, int > ( 'X', 1 ) );
-	weightMap.insert( pair< char, int > ( 'Y', 16 ) );
-	weightMap.insert( pair< char, int > ( 'Z', 1 ) );
+	weightMap.insert(pair< char, int > (' ', 186));
+	weightMap.insert(pair< char, int > ('A', 64));
+	weightMap.insert(pair< char, int > ('B', 13));
+	weightMap.insert(pair< char, int > ('C', 22));
+	weightMap.insert(pair< char, int > ('D', 32));
+	weightMap.insert(pair< char, int > ('E', 103));
+	weightMap.insert(pair< char, int > ('F', 21));
+	weightMap.insert(pair< char, int > ('G', 15));
+	weightMap.insert(pair< char, int > ('H', 47));
+	weightMap.insert(pair< char, int > ('I', 57));
+	weightMap.insert(pair< char, int > ('J', 1));
+	weightMap.insert(pair< char, int > ('K', 5));
+	weightMap.insert(pair< char, int > ('L', 32));
+	weightMap.insert(pair< char, int > ('M', 20));
+	weightMap.insert(pair< char, int > ('N', 57));
+	weightMap.insert(pair< char, int > ('O', 63));
+	weightMap.insert(pair< char, int > ('P', 15));
+	weightMap.insert(pair< char, int > ('Q', 1));
+	weightMap.insert(pair< char, int > ('R', 48));
+	weightMap.insert(pair< char, int > ('S', 51));
+	weightMap.insert(pair< char, int > ('T', 80));
+	weightMap.insert(pair< char, int > ('U', 23));
+	weightMap.insert(pair< char, int > ('V', 8));
+	weightMap.insert(pair< char, int > ('W', 18));
+	weightMap.insert(pair< char, int > ('X', 1));
+	weightMap.insert(pair< char, int > ('Y', 16));
+	weightMap.insert(pair< char, int > ('Z', 1));
 }
 
 int main() {
