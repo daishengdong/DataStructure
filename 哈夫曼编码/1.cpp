@@ -45,7 +45,7 @@ public:
 private:
 	void buildTree();	// 建树
 	ptrTreeNode getPtr(ptrTreeNode root, char ch);
-	char * getCoding(ptrTreeNode node);
+	char*  getCoding(ptrTreeNode node);
 
 	ptrListLink listOfRoot;	// 链接树节点的链表头
 	ptrTreeNode SUMRoot;	// 建树后得到的哈夫曼树的根节点
@@ -175,7 +175,7 @@ void hfmCode::Encoding() {
 	while (fin.get(chr)) {
 		ptrTreeNode ptr = getPtr(SUMRoot, chr);
 		cout << chr << "  ";
-		char * coding = getCoding(ptr);
+		char*  coding = getCoding(ptr);
 		cout << coding << endl;
 		fout << coding;
 	}
@@ -235,7 +235,7 @@ ptrTreeNode hfmCode::getPtr(ptrTreeNode root, char ch) {
 	return NULL;
 }
 
-char * hfmCode::getCoding(ptrTreeNode node) {
+char*  hfmCode::getCoding(ptrTreeNode node) {
 	stack< char > coding;
 	while (node->parent) {
 		coding.push(node->tag);
@@ -243,7 +243,7 @@ char * hfmCode::getCoding(ptrTreeNode node) {
 	}
 
 	int i = 0;
-	char * codeString = new char[coding.size() + 1];
+	char*  codeString = new char[coding.size() + 1];
 	while (!coding.empty()) {
 		codeString[i] = coding.top();
 		coding.pop();

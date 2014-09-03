@@ -8,8 +8,8 @@ const STACK_INIT_SIZE=100;
 const STACKINCREMETN=10;
 
 typedef struct {
-	char * top;
-	char * base;
+	char*  top;
+	char*  base;
 	int stacksize;
 } sqstack;
 
@@ -24,14 +24,14 @@ typedef struct {
 } linkqueue;
 
 void initstack(sqstack & s) {
-	s.base = (char *) malloc(STACK_INIT_SIZE * sizeof(char));
+	s.base = (char* ) malloc(STACK_INIT_SIZE * sizeof(char));
 	s.top = s.base;
 	s.stacksize = STACK_INIT_SIZE;
 }
 
 void push(sqstack & s, char c) {
 	if (s.top - s.base >= s.stacksize) {
-		s.base = (char *) realloc(s.base, (s.stacksize + STACKINCREMETN) * sizeof(char));
+		s.base = (char* ) realloc(s.base, (s.stacksize + STACKINCREMETN) * sizeof(char));
 		s.top = s.base + s.stacksize;
 		s.stacksize += STACKINCREMETN;
 	}

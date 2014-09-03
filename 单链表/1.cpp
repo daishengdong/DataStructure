@@ -71,7 +71,7 @@ void list::print() {
 	}
 }
 
-int main(int argc, const char *argv[]) {
+int main(int argc, const char* argv[]) {
 	list la, lb;
 	for (int i = 0; i < 10; ++i) la.add(i);
 
